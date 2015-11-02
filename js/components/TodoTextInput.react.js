@@ -77,7 +77,7 @@ const inputStyles = {
   paddingVertical: 0,
   paddingHorizontal: 0,
   backgroundColor: '#fff',
-  flex: 1
+  flex: 1,
 };
 
 module.exports = TodoTextInput;

@@ -96,8 +96,7 @@ var TodoItem = React.createClass({
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 14,
-    paddingHorizontal: 18,
+    paddingLeft: 18,
     flexDirection: 'row',
     alignItems: 'center'
   },
@@ -105,7 +104,7 @@ const styles = StyleSheet.create({
     width: 18,
     height: 18,
     marginRight: 20,
-    borderRadius: 18/2,
+    borderRadius: 18 / 2,
     borderWidth: 1,
     borderColor: 'orange'
   },
@@ -114,12 +113,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#91ee91'
   },
   content: {
+    paddingVertical: 12,
     flex: 1,
     justifyContent: 'center'
   },
   contentText: {
-    height: 32,
-    fontSize: 24
+    height: 48,
+    fontSize: 20,
   }
 });
 

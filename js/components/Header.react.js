@@ -19,13 +19,13 @@ var Header = React.createClass({
    */
   render: function() {
     return (
-      <View id="header">
+      <View style={styles.wrapper}>
         <TodoTextInput
           placeholder="What needs to be done?"
           onSave={this._onSave}
           multiline
           clearOnSave
-          textStyles={{height: 50}}
+          textStyles={styles.input}
         />
     </View>
     );
@@ -44,5 +44,17 @@ var Header = React.createClass({
   }
 
 });
+
+var styles = {
+  wrapper: {
+    borderBottomColor: '#ddd',
+    borderBottomWidth: 1,
+  },
+  input: {
+    fontSize: 20,
+    margin: 10,
+    height: 36
+  }
+};
 
 module.exports = Header;

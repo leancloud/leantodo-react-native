@@ -8,7 +8,7 @@
  */
 
 var React = require('react-native');
-var {View, Text, TouchableOpacity} = React;
+var {View, Text, TouchableOpacity, StyleSheet} = React;
 var ReactPropTypes = React.PropTypes;
 var TodoActions = require('../actions/TodoActions');
 
@@ -42,19 +42,17 @@ var Footer = React.createClass({
     var clearCompletedButton;
     if (completed) {
       clearCompletedButton =
-        <Text>
-          Clear completed ({completed})
+        <Text style={ButtonStyles.btnText}>
+          Clear done ({completed})
         </Text>;
     }
 
   	return (
-      <View id="footer">
-        <View id="todo-count">
-          <Text>
-            {(total - completed) + ' / ' + total}
-          </Text>
-        </View>
-        <TouchableOpacity onPress={this._onClearCompletedClick}>
+      <View style={styles.footer}>
+        <Text style={styles.count}>
+          {(total - completed) + ' / ' + total}
+        </Text>
+        <TouchableOpacity style={[ButtonStyles.btn, styles.clearBtn]} onPress={this._onClearCompletedClick}>
           {clearCompletedButton}
         </TouchableOpacity>
       </View>
@@ -69,5 +67,25 @@ var Footer = React.createClass({
   }
 
 });
+
+var styles = StyleSheet.create({
+  footer: {
+    backgroundColor: '#f9f9f9',
+    height: 40,
+    borderTopColor: '#999',
+    borderTopWidth: 0.5,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  count: {
+    flex: 1,
+    marginLeft: 12
+  },
+  clearBtn: {
+    paddingHorizontal: 12,
+    height: 40
+  }
+});
+var ButtonStyles = require('./ButtonStyles');
 
 module.exports = Footer;

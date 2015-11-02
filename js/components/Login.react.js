@@ -63,27 +63,36 @@ var Login = React.createClass({
   render: function() {
     return (
       <View style={styles.container}>
+        <View style={{flex:1}}></View>
+        <Text style={styles.logo}>
+          LeanTodo
+        </Text>
         <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+          style={styles.textInput}
           onChangeText={(username) => this.setState({username})}
           value={this.state.username}
+          placeholder="Username"
         />
         <TextInput
           secureTextEntry
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+          style={styles.textInput}
           onChangeText={(password) => this.setState({password})}
           value={this.state.password}
+          placeholder="Password"
         />
-        <TouchableOpacity onPress={this.login}>
-          <Text style={styles.loginButton}>
-            登录
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this.signup}>
-          <Text style={styles.loginButton}>
-            注册
-          </Text>
-        </TouchableOpacity>
+        <View style={styles.btnsWrapper}>
+          <TouchableOpacity style={[ButtonStyles.btn, styles.button, styles.loginButton]} onPress={this.login}>
+            <Text style={[ButtonStyles.btnText, styles.buttonText, styles.loginButtonText]}>
+              Login
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[ButtonStyles.btn, styles.button, styles.registerButton]} onPress={this.signup}>
+            <Text style={[ButtonStyles.btnText, styles.buttonText]}>
+              Register
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View style={{flex:3}}></View>
       </View>
     );
   }
@@ -92,21 +101,52 @@ var Login = React.createClass({
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF'
+    marginHorizontal: 4,
+  },
+
+  logo: {
+    fontSize: 32,
+    color: 'orange',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 60
+  },
+
+  textInput: {
+    fontSize: 20,
+    margin: 4,
+    height: 36,
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#666',
+  },
+
+  btnsWrapper: {
+    alignSelf: 'stretch',
+    flexDirection: 'row',
+    marginTop: 16,
+  },
+  button: {
+    flex: 1,
+    margin: 4,
+    borderRadius: 4,
   },
   loginButton: {
+    backgroundColor: 'orange',
+  },
+  registerButton: {
+    borderWidth: 0.5,
+    borderColor: 'orange'
+  },
+  buttonText: {
     flex: 1,
     fontSize: 20,
+    padding: 10,
     textAlign: 'center',
-    margin: 10
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5
+  loginButtonText: {
+    color: 'white'
   }
 });
+var ButtonStyles = require('./ButtonStyles');
 
 module.exports = Login;
