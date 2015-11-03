@@ -2,12 +2,12 @@
   "name": "LeanTodo",
   "version": "0.0.1",
   "private": true,
+  "license": "BSD",
   "scripts": {
     "start": "node_modules/react-native/packager/packager.sh"
   },
   "dependencies": {
     "avoscloud-sdk": ">=1.0.0-rc3",
-    "classnames": "^2.1.3",
     "eventemitter2": "^0.4.14",
     "flux": "^2.0.1",
     "keymirror": "~0.1.0",
