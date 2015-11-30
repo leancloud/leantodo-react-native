@@ -23,6 +23,9 @@ LeanTodo App 与 [LeanCloudTodo Web App](http://todolist.avosapps.com/) ([source
 3. `npm install`。
 4. 编译运行 LeanTodo 的 iOS 与 Android app，（就像第一步中的 AwesomeProject 一样）。
 
+#### Windows 问题
+[#1 Windows平台上问题汇总](https://github.com/leancloud/leantodo-react-native/issues/1)
+
 ### 截图
 
 <img width="360" src="https://cloud.githubusercontent.com/assets/175227/10905303/4c4b4628-8254-11e5-97e4-ae432738e099.png">
