@@ -10,9 +10,11 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@expo/react-native-action-sheet": "^3.8.0",
     "react": "16.13.1",
     "react-native": "0.63.2",
     "react-native-elements": "^2.3.2",
+    "react-native-swipe-list-view": "^3.2.4",
     "react-native-vector-icons": "^7.1.0"
   },
   "devDependencies": {
