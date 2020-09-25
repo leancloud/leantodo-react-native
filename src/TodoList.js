@@ -1,11 +1,59 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {ListItem, Icon, Input, ThemeContext} from 'react-native-elements';
 import {SwipeListView} from 'react-native-swipe-list-view';
 
-export default function TodoList(props) {
+function CheckIcon(props) {
   const {theme} = useContext(ThemeContext);
+  const name = props.checked ? 'check-circle' : 'radio-button-unchecked';
+  const color = props.checked ? '#93ec94' : theme.colors.primary;
+  return <Icon name={name} color={color} onPress={props.onPress} />;
+}
 
+function TodoItem(props) {
+  const [editing, setEditing] = useState(false);
+  const [editingContent, setEditingContent] = useState('');
+
+  function handleChangeContent() {
+    setEditingContent(props.content);
+    setEditing(true);
+  }
+
+  function handleFinishChangeContent() {
+    if (editingContent !== props.content) {
+      props.onChangeContent(editingContent);
+    }
+    setEditing(false);
+  }
+
+  return (
+    <ListItem bottomDivider>
+      <CheckIcon checked={props.done} onPress={props.onChangeDone} />
+      <ListItem.Content>
+        {editing ? (
+          <Input
+            clearButtonMode="while-editing"
+            containerStyle={styles.todoInputBox}
+            inputContainerStyle={styles.todoInputContainer}
+            style={styles.todoInput}
+            value={editingContent}
+            autoFocus={true}
+            onChangeText={setEditingContent}
+            onBlur={handleFinishChangeContent}
+          />
+        ) : (
+          <ListItem.Title
+            onPress={handleChangeContent}
+            style={props.done ? styles.todoContentDone : null}>
+            {props.content}
+          </ListItem.Title>
+        )}
+      </ListItem.Content>
+    </ListItem>
+  );
+}
+
+export default function TodoList(props) {
   function renderHiddenItem(data) {
     const todo = data.item;
     return (
@@ -22,41 +70,20 @@ export default function TodoList(props) {
   function renderTodoItem(data) {
     const todo = data.item;
     return (
-      <ListItem bottomDivider>
-        {todo.done ? (
-          <Icon
-            name="check-circle"
-            color="#93ec94"
-            onPress={() => props?.onToggleDone?.(todo.id)}
-          />
-        ) : (
-          <Icon
-            name="radio-button-unchecked"
-            color={theme.colors.primary}
-            onPress={() => props?.onToggleDone?.(todo.id)}
-          />
-        )}
-        <ListItem.Content>
-          {props?.editingId === todo.id ? (
-            <Input
-              clearButtonMode="while-editing"
-              containerStyle={styles.todoInputBox}
-              inputContainerStyle={styles.todoInputContainer}
-              style={styles.todoInput}
-              value={props?.editingContent}
-              autoFocus={true}
-              onChangeText={props?.onChangeEditingContent}
-              onBlur={props?.onEditingInputBlur}
-            />
-          ) : (
-            <ListItem.Title
-              onPress={() => props?.onContentClick?.(todo.id)}
-              style={todo.done ? styles.todoContentDone : {}}>
-              {todo.content}
-            </ListItem.Title>
-          )}
-        </ListItem.Content>
-      </ListItem>
+      <TodoItem
+        content={todo.content}
+        done={todo.done}
+        onChangeDone={() => props.onChangeDone(todo.id, !todo.done)}
+        onChangeContent={(content) => props.onChangeContent(todo.id, content)}
+      />
+    );
+  }
+
+  if (props.todos.length === 0) {
+    return (
+      <View style={styles.emptyListBox}>
+        <Text style={styles.emptyListText}>Nothing</Text>
+      </View>
     );
   }
 
@@ -68,14 +95,20 @@ export default function TodoList(props) {
       disableRightSwipe={true}
       renderItem={renderTodoItem}
       renderHiddenItem={renderHiddenItem}
-      style={styles.todoList}
       keyExtractor={(todo) => todo.id}
     />
   );
 }
 
 const styles = StyleSheet.create({
-  todoList: {},
+  emptyListBox: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  emptyListText: {
+    color: 'gray',
+  },
   deleteButton: {
     flex: 1,
     justifyContent: 'center',

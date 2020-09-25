@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {ThemeContext, Header as RNHeader, Input} from 'react-native-elements';
 import {useActionSheet} from '@expo/react-native-action-sheet';
@@ -6,6 +6,7 @@ import {useActionSheet} from '@expo/react-native-action-sheet';
 export default function Header(props) {
   const {theme} = useContext(ThemeContext);
   const {showActionSheetWithOptions} = useActionSheet();
+  const [content, setContent] = useState('');
 
   function handleClearDone() {
     props?.onClearDone?.();
@@ -13,6 +14,14 @@ export default function Header(props) {
 
   function handleLogout() {
     props?.onLogout?.();
+  }
+
+  function handleAddTodo() {
+    if (!content) {
+      return;
+    }
+    props?.onAddTodo(content);
+    setContent('');
   }
 
   function showActionSheet() {
@@ -51,7 +60,7 @@ export default function Header(props) {
           icon: 'add',
           color: '#fff',
           size: 26,
-          onPress: props?.onAddTodo,
+          onPress: handleAddTodo,
         }}
         containerStyle={styles.headerContainer}
       />
@@ -62,8 +71,8 @@ export default function Header(props) {
           backgroundColor: theme.colors.primary,
         }}
         clearButtonMode="while-editing"
-        value={props?.todoContent}
-        onChangeText={props?.onChangeContent}
+        value={content}
+        onChangeText={setContent}
         style={styles.input}
       />
     </View>

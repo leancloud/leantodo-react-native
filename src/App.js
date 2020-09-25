@@ -1,9 +1,11 @@
-import React, {useState} from 'react';
-
+import React, {useEffect, useState} from 'react';
 import {ThemeProvider} from 'react-native-elements';
 import {ActionSheetProvider} from '@expo/react-native-action-sheet';
+
 import Login from './Login';
 import Todo from './Todo';
+
+import {User} from 'open-leancloud-storage';
 
 const theme = {
   colors: {
@@ -16,18 +18,36 @@ export default function App() {
   const [errMsg, setErrMsg] = useState('');
 
   function handleLogin({username, password}) {
-    console.log('login', username, password);
-    setUser({username, password});
+    User.logIn(username, password)
+      .then((userObj) => {
+        setUser(userObj);
+        setErrMsg('');
+      })
+      .catch((error) => setErrMsg(error.message));
   }
 
   function handleSignUp({username, password}) {
-    console.log('signUp', username, password);
-    setUser({username, password});
+    User.signUp({username, password})
+      .then((userObj) => {
+        setUser(userObj);
+        setErrMsg('');
+      })
+      .catch((error) => setErrMsg(error.message));
   }
 
   function handleLogout() {
-    setUser(null);
+    User.logOutAsync().then(() => setUser(null));
   }
+
+  useEffect(() => {
+    User.currentAsync().then((currentUser) => {
+      currentUser.isAuthenticated().then((authenticated) => {
+        if (authenticated) {
+          setUser(currentUser);
+        }
+      });
+    });
+  }, [setUser]);
 
   return (
     <ThemeProvider theme={theme}>
