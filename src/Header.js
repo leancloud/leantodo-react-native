@@ -74,6 +74,7 @@ export default function Header(props) {
         value={content}
         onChangeText={setContent}
         style={styles.input}
+        placeholder="What needs to be done?"
       />
     </View>
   );

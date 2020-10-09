@@ -5,7 +5,7 @@ import {ActionSheetProvider} from '@expo/react-native-action-sheet';
 import Login from './Login';
 import Todo from './Todo';
 
-import {User} from 'open-leancloud-storage';
+import {User} from 'leancloud-storage';
 
 const theme = {
   colors: {
@@ -18,7 +18,7 @@ export default function App() {
   const [errMsg, setErrMsg] = useState('');
 
   function handleLogin({username, password}) {
-    User.logIn(username, password)
+    User.login(username, password)
       .then((userObj) => {
         setUser(userObj);
         setErrMsg('');
@@ -41,11 +41,13 @@ export default function App() {
 
   useEffect(() => {
     User.currentAsync().then((currentUser) => {
-      currentUser.isAuthenticated().then((authenticated) => {
-        if (authenticated) {
-          setUser(currentUser);
-        }
-      });
+      if (currentUser) {
+        currentUser.isAuthenticated().then((authenticated) => {
+          if (authenticated) {
+            setUser(currentUser);
+          }
+        });
+      }
     });
   }, [setUser]);
 

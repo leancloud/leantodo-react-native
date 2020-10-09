@@ -4,7 +4,7 @@ import {View, StyleSheet} from 'react-native';
 import Header from './Header';
 import TodoList from './TodoList';
 
-import {CLASS, User, ACL} from 'open-leancloud-storage';
+import {CLASS, User, ACL} from 'leancloud-storage';
 
 function convertTodo(todo) {
   return {
